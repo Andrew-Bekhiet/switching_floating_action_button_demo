@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:switching_floating_action_button/switching_floating_action_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,9 +47,17 @@ class _HomeScreenState extends State<HomeScreen>
             ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => counters[_tabController.index]++),
-        child: const Icon(Icons.add),
+      floatingActionButton: SwitchingFloatingActionButton(
+        animation: _tabController.animation!,
+        builder: (context, i, child) => FloatingActionButton(
+          onPressed: () => setState(() => counters[i]++),
+          child: switch (i) {
+            0 => const Icon(Symbols.add),
+            1 => const Icon(Symbols.add_home),
+            2 => const Icon(Symbols.add_diamond),
+            _ => throw UnimplementedError(),
+          },
+        ),
       ),
     );
   }
